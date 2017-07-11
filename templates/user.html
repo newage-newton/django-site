@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+    </script>
+    <title>{{ user }}</title>
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper">
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/user/">{{ user }}</a></li>
+        <li><a href="/user/">{{ group }}</a></li>
+        <li><a class="waves-effect waves-light btn" href="/logout/">Logout</a></li>
+      </ul>
+    </div>
+</nav>
+<p align="center">Current Challenges</p>
+<table class="highlight">
+{% for challenge in challenges %}
+    {% if forloop.first %}
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Coordinator</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+    {% endif %}
+    <tr>
+        <td>{{ challenge.name }}</td>
+        <td>{{ challenge.start_date }}</td>
+        <td>{{ challenge.end_date }}</td>
+        <td>{{ challenge.coordinator }}</td>
+        <td>{{ challenge.description }}</td>
+    </tr>
+{% empty %}
+    There is nothing to show.
+{% endfor %}
+    </tbody>
+</table>
+{% if group == 'ADMIN' %}
+    <div  class="form-container" style="width: 60%;padding: 40px; ">
+        <p>Create New Challenge</p>
+        <form action="/user/" method="post">
+        {% csrf_token %}
+        {{ challenge_form.as_p}}
+        <input type="submit" value="Create Challenge" class="btn waves-effect"/>
+    </form>
+    </div>
+{% endif %}
+</body>
+</html>

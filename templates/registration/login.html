@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+    <title>Login</title>
+</head>
+<body>
+{% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+<div class="form-container" style="width: 50%; padding: 60px">
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <p>{{ form.username.label_tag }}</p>
+        <p>{{ form.username }}</p>
+        <p>{{ form.password.label_tag }}</p>
+        <p>{{ form.password }}</p>
+        <input type="submit" value="login" class="waves-effect btn"/>
+    </form>
+    <p><a href="/signup"><button class="btn waves-effect" name="signup">Sign Up</button></a></p>
+</div>
+</body>
+</html>
